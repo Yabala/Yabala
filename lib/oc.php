@@ -36,10 +36,9 @@ class OC {
 
 	//RECIBE:	Nada
 	//RETORNA:	Array de String
-	//NOTA:		Implementa la tabla de compatibilidad para remix de obras, dado el valor del ELCC $value 
-	//		retorna todos los valores del ELCC compatibles con $value para combinar en un remix de obras
+	//NOTA:		
 	public function printOC(){
-		return array ($this->data->getType(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense()); 
+		return array ($this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense()); 
 	}
 
 

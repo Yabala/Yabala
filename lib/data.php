@@ -28,8 +28,8 @@ class DATA{
 	//RECIBE:	Nada
 	//RETORNA:	String
 	//NOTA:		Retorna el valor del $format del objeto
-	public function getType(){
-			return $this->type;
+	public function getFormat(){
+			return $this->format;
 	}
 
 	//RECIBE:	Nada

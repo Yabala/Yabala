@@ -105,13 +105,13 @@ class DB5 {
 
 	//Imprime el contenido de la base
 	//SOLO PARA DEBUG
-	public static function printdbDB($db){
-		foreach ($db as $key => $item) {
-			echo "<b>$key:</b> ";
-			print_r ($item);
-			echo "<br>\n";
-		}
-	}
+	//public static function printdbDB($db){
+	//	foreach ($db as $key => $item) {
+	//		echo "<b>$key:</b> ";
+	//		print_r ($item);
+	//		echo "<br>\n";
+	//	}
+	//}
 
 
 

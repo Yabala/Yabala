@@ -27,7 +27,6 @@ class yabala implements iyabala{
 		return $this->op;
 	}
 
-
 	//RECIBE:	Nada
 	//RETORNA:	Array of Array of String
 	//NOTA:		Devuelve un array con los nombres y url de los respostiros registrado en la base apuntada por $repositoryListUrl
@@ -53,7 +52,7 @@ class yabala implements iyabala{
 	}
 	
 	//RECIBE:	un op y los datos para un oc
-	//RETORNA:	un op con un oc agregado
+	//RETORNA:	Nada
 	//NOTA:		sin comentarios
 	public function add($format, $keywords, $author, $url, $cc){
 		$this->op->add($format, $keywords, $author, $url, $cc);
@@ -100,26 +99,31 @@ class yabala implements iyabala{
 
 
 
-	//realiza una consulta en la base de datos y la recibe en una colección de datos
+	//RECIBE:	String, String, Integer, Integer
+	//RETORNA:	Collection
+	//NOTA:		Busca en la base de datos ubicada en la url $repositoryUrl, el string contenido en $key y retorna la colección de registros resultado
+	//		Si $i<0 busca si aparece $key en forma exacta o como sub-string en cualquier campo
+	//		Si $i>=0 y $mode=0 busca si aparece $key en forma exacta o como sub-string dentro del campo $i
+	//		Si $i>=0 y $mode=1 busca si aparece $key en forma exacta  dentro del campo $i
+	//		$repositoryUrl es una url donde está la base en la que se buscará, por ejemplo: "http://misitio.com/db.csv
 	public function select($repositoryUrl, $key, $i, $mode){
-		//$db5 = new db5();
 		return (DB5::select($repositoryUrl, $key, $i, $mode));
 	}
 
 
 	//Imprime el contenido de todos los oc de la OP
 	//SOLO PARA DEBUG
-	function printdb($db){
-		DB5::printdbDB($db);
+	//function printdb($db){
+	//	DB5::printdbDB($db);
+	//}
+
+
+	//RECIBE:	Nada
+	//RETORNA:	Array of Array of String
+	//NOTA:		Retorna un array con los elementos de cada OC como un array de strings 
+	public function getWorks(){
+			return $this->op->printOP();
 	}
-
-
-	public function printYABALA(){
-		return $this->op->printOP();
-	}
-
-
-
 
 	}
 

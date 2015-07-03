@@ -93,12 +93,12 @@ class OP {
 			$code = $code."Obra bajo licencia Cretive Commons 4.0 Internacional $cc\n\n";
 			$code = $code."Obra integrantes del remix:\n\n";
 			foreach ($this->ocs as $oc) {
-					$format = $oc->data->getType();
+					$format = $oc->data->getFormat();
 					$keywords = $oc->data->getKeywords();
 					$author = $oc->data->getAuthor();
 					$url = $oc->data->getUrl();
 					$cct = $oc->data->getLicense();
-					$code = $code."Licencia: $cct\nTipo: $format\nDescripción: $keywords\nAutor: $author\nUrl: $url\n\n";
+					$code = $code."Licencia: $cct\nFormato: $format\nDescripción: $keywords\nAutor: $author\nUrl: $url\n\n";
 			}
 			$code = $code."</pre>";
 

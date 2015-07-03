@@ -64,6 +64,10 @@ interface iyabala{
 	//realiza una consulta en la base de datos y la recibe en una colección de datos
 	public function select($repositoryUrl, $key, $i, $mode);
 
+	//RECIBE:	Nada
+	//RETORNA:	Array of Array of String
+	//NOTA:		Retorna un array con los elementos de cada OC como un array de strings 
+	public function getWorks();
 
 	}
 
