@@ -1,24 +1,37 @@
 <?php
 
 
+
+// This file is part of Yabala https://github.com/Yabala/yabala
+//
+// Yabala is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Yabala is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Yabala.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
 include_once("lib/yabala.php");
 
 
 interface iyabala{
 
 	const yabalaUrl = "http://localhost/yabala/yabala/www/";
+	const yabalaImg = "http://localhost/yabala/yabala/img/";
+	const repositoryListUrl = "http://localhost/yabala/yabala/db/list.csv";
 	const creditsPath = "../yabala/www/";
 	const dbPath = "../yabala/db/db.csv";
-	const repositoryListUrl = "http://localhost/yabala/yabala/db/list.csv";
-	//const dbPath = "http://164.73.2.138/db.csv";
-
-	//Colección de objetos contenedores
-	//var $op;
-
-	//function __construct() {
-	//       $this->op = new OP();
-   	//}
-
+	
+	
+	
 	public function getOP();
 
 	//RECIBE:	Nada
@@ -56,7 +69,9 @@ interface iyabala{
 	//retorna la mínima licencia de la adaptacion cc
 	public function adaptation($cc);
 	
-	public function credits($name, $cc);
+	public function credits($name, $cc, $options);
+	
+	public function resetCredits($name, $options);
 
 	//Agrega a la base de datos del sistema los datos un registro
 	public function insert($format, $keywords, $author, $url, $cc);

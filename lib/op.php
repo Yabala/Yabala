@@ -1,5 +1,24 @@
 <?php
 
+
+
+// This file is part of Yabala https://github.com/Yabala/yabala
+//
+// Yabala is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Yabala is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Yabala.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
 include_once ("collection/collection.php");
 include_once ("phpqrcode/qrlib.php");
 include_once ("oc.php");
@@ -80,30 +99,27 @@ class OP {
 		return LICENCIA::min($this->calculator());
 	}
 
-	//RECIBE:	String, String, String, Tag, Integer, Integer, Integer
+	//RECIBE:	String, String, String, String, Tag, Integer, Integer, Integer
 	//RETORNA:	Array of String
-	//NOTA:		Retorna un array con tres strings que contiene:
+	//NOTA:		Retorna un array con cuatro strings que contiene:
 	//		La URL ($yabalaUrl+name+html) de la página HTML con los créditos del remix si $html!=0 sino retorna el string vacío
 	//		La URL ($yabalaUrl+name+png) de la imagen QR con los créditos del remix si $qrfull!=0 sino retorna el string vacío
 	//		La URL ($yabalaUrl+name+png) de la imagen QR con la licencia del remix si $qrmin!=0 sino retorna el string vacío 
-	public function credits($name, $creditsPath, $yabalaUrl, $cc, $html, $qrfull, $qrmin){
+	//		La URL ($yabalaUrl+name+png) de la imagen Creative Commons con la licencia del remix 
+	public function credits($name, $creditsPath, $yabalaUrl, $yabalaImg, $cc, $html, $qrfull, $qrmin){
 			
 			//Hacer el código de la licencia del remix
-			$code = "<pre>\n";
+			$code = "";
 			$code = $code."Obra bajo licencia Cretive Commons 4.0 Internacional $cc\n\n";
 			$code = $code."Obra integrantes del remix:\n\n";
 			foreach ($this->ocs as $oc) {
-					$format = $oc->data->getFormat();
-					$keywords = $oc->data->getKeywords();
 					$author = $oc->data->getAuthor();
 					$url = $oc->data->getUrl();
 					$cct = $oc->data->getLicense();
-					$code = $code."Licencia: $cct\nFormato: $format\nDescripción: $keywords\nAutor: $author\nUrl: $url\n\n";
+					$code = $code."Licencia: $cct\nAutor: $author\nUrl: $url\n\n";
 			}
-			$code = $code."</pre>";
 
 			//Definir el nombre de los archivos
-			//$name = uniqid().rand();
 						
 			//si $html es diferente de 0 crea el archivo html
 			if($html!=0) {
@@ -111,7 +127,7 @@ class OP {
 				$nameHtml = $name.".html";
 
 				$fp = fopen($creditsPath.$nameHtml, "w");
-				fwrite($fp, $code);
+				fwrite($fp, "<pre>\n".$code."</pre>\n");
 				fclose($fp);
 			}else{
 				$nameHtml="";
@@ -150,8 +166,9 @@ class OP {
 				$nameQrmin="";
 			}
 			
-			
-			return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin);
+			//crea el link a la imagen de la licencia CC
+			$nameCC = strtolower($cc).".png";
+			return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaImg.$nameCC);
 	}
 	
 

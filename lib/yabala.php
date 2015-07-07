@@ -1,6 +1,23 @@
 <?php
 
 
+
+// This file is part of Yabala https://github.com/Yabala/yabala
+//
+// Yabala is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Yabala is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Yabala.  If not, see <http://www.gnu.org/licenses/>.
+
+
 include_once("op.php");
 include_once("db5.php");
 include_once("formats.php");
@@ -87,8 +104,30 @@ class yabala implements iyabala{
 		return ELCC::a($cc);
 	}
 
-	public function credits($name, $cc){
-		return $this->op->credits($name, self::creditsPath, self::yabalaUrl, $cc, 1, 1, 1);
+	public function credits($name, $cc, $options){
+		return $this->op->credits($name, self::creditsPath, self::yabalaUrl, self::yabalaImg, $cc, 1, 1, 1);
+	}
+
+	public function resetCredits($name, $options){
+		//definir nombres de archvios de créditos
+		$nameHtml = $name.".html";
+		$nameQrfull = $name."_full.png";
+		$nameQrmin = $name."_min.png";
+		
+		//si el archivo ya existe lo borra
+		if (file_exists(self::creditsPath.$nameHtml)){
+			unlink(self::creditsPath.$nameHtml);
+		}
+
+		//si el archivo ya existe lo borra	
+		if (file_exists(self::creditsPath.$nameQrfull)){
+			unlink(self::creditsPath.$nameQrfull);
+		}
+
+		//si el archivo ya existe lo borra
+		if (file_exists(self::creditsPath.$nameQrmin)){
+			unlink(self::creditsPath.$nameQrmin);
+		}
 	}
 
 	//Agrega a la base de datos del sistema los datos un registro
