@@ -110,7 +110,12 @@ class OP {
 			
 			//Hacer el código de la licencia del remix
 			$code = "";
-			$code = $code."Obra bajo licencia Cretive Commons 4.0 Internacional $cc\n\n";
+			//se define la leyenda según la licencia
+			if ($cc=="CR"){
+				$code = $code."Obra con todos los derechos reservados \n\n";
+			}else{
+				$code = $code."Obra bajo licencia Cretive Commons 4.0 Internacional $cc\n\n";
+			}
 			$code = $code."Obra integrantes del remix:\n\n";
 			foreach ($this->ocs as $oc) {
 					$author = $oc->data->getAuthor();
@@ -160,8 +165,12 @@ class OP {
 					unlink($creditsPath.$nameQrmin);
 				}
 
-				//crea el nuevo archivo
-				QRcode::png("CC 4.0: $cc", $creditsPath.$nameQrmin);
+				//crea el nuevo archivo según la licencia
+				if($cc=="CR"){
+					QRcode::png("$cc", $creditsPath.$nameQrmin);
+				}else{
+					QRcode::png("CC 4.0: $cc", $creditsPath.$nameQrmin);
+				}
 			}else{
 				$nameQrmin="";
 			}

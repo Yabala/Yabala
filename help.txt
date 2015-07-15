@@ -2,7 +2,7 @@
 ================================================================================================================================================================================================================================================
 
 Título:		AYUDA DE YABALÁ
-Versión:	1.1
+Versión:	1.12
 Fecha:		14/07/2015
 Autor:		José Fager
 Contacto:	jfager@cse.edu.uy
@@ -22,7 +22,7 @@ INSTALACIÓN DE YABALÁ
 1) Descargar Yabalá de "https://github.com/Yabala/yabala".
 2) Instalar el paquete "yabala" dentro del directorio raíz del servidor web, por ejemplo: si el directorio raíz está en "/var/www/" entonces debe quedar instalado en "/var/www/yabala/".
 3) Dar permisos de lectura y escritura a "/var/www/yabala/www/", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/yabala/www/".
-4) Dar permisos de lectura y escritura a "/var/www/yabala/db/db.csv", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/yabala/db/db.csv".
+4) Dar permisos de lectura y escritura a "/var/www/yabala/db/db.csv", por ejemplo en un entorno UNIX sería: "chmod 777 /var/www/yabala/db/db.csv".
 5) Configurar las rutas del sistema, para ello se debe modificar el archivo "iyabala.php" que en el ejemplo estaría ubicado en: "/var/www/yabala/iyabala.php". Si la url del sitio es "misitio.com" las rutas deberían ser:
 
        const yabalaUrl = "http://misitio.com/yabala/www/";
