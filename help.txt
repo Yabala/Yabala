@@ -1,0 +1,68 @@
+================================================================================================================================================================================================================================================
+================================================================================================================================================================================================================================================
+
+Título:		AYUDA DE YABALÁ
+Versión:	1.1
+Fecha:		14/07/2015
+Autor:		José Fager
+Contacto:	jfager@cse.edu.uy
+Licencia:	Creative Commons 4.0 - BY
+
+================================================================================================================================================================================================================================================
+================================================================================================================================================================================================================================================
+
+
+
+
+
+================================================================================================================================================================================================================================================
+INSTALACIÓN DE YABALÁ
+================================================================================================================================================================================================================================================
+
+1) Descargar Yabalá de "https://github.com/Yabala/yabala".
+2) Instalar el paquete "yabala" dentro del directorio raíz del servidor web, por ejemplo: si el directorio raíz está en "/var/www/" entonces debe quedar instalado en "/var/www/yabala/".
+3) Dar permisos de lectura y escritura a "/var/www/yabala/www/", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/yabala/www/".
+4) Dar permisos de lectura y escritura a "/var/www/yabala/db/db.csv", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/yabala/db/db.csv".
+5) Configurar las rutas del sistema, para ello se debe modificar el archivo "iyabala.php" que en el ejemplo estaría ubicado en: "/var/www/yabala/iyabala.php". Si la url del sitio es "misitio.com" las rutas deberían ser:
+
+       const yabalaUrl = "http://misitio.com/yabala/www/";
+       const repositoryListUrl = "http://misitio.com/yabala/db/list.csv";
+       const creditsPath = "../yabala/www/";
+       const dbPath = "../yabala/db/db.csv";
+       
+================================================================================================================================================================================================================================================
+
+
+
+
+
+================================================================================================================================================================================================================================================
+INSATALACIÓN DE CALCULATOR
+================================================================================================================================================================================================================================================
+
+1) Previamente se debe instalar Yabalá.
+2) Descargar Calculator de "https://github.com/Yabala/calculator".
+3) Instalar el paquete "calculator" al mismo nivel del directorio raíz del servidor web donde está instalado el paquete "yabala", por ejemplo si la instalación de "yabala" está en "/var/www/yabala/" entonces debe quedar instalado en "/var/www/calculator/".
+4) Se deben dar permisos de lectura y escritura a "/var/www/calculator/work/", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/calculator/work/".
+
+================================================================================================================================================================================================================================================
+
+
+
+
+
+================================================================================================================================================================================================================================================
+INSATALACIÓN DE SEARCH
+================================================================================================================================================================================================================================================
+
+1) Previamente se debe instalar Yabalá.
+2) Descargar Search de "https://github.com/Yabala/search".
+3) Instalar el paquete "search" al mismo nivel del directorio raíz del servidor web donde está instalado el paquete "yabala", por ejemplo si la instalación de "yabala" está en "/var/www/yabala/" entonces debe quedar instalado en "/var/www/calculator/".
+4) Se deben configurar la lista de repositorios ubicada en la instalación de Yabalá, en el ejemplo sería: "/var/www/yabala/db/list.csv".
+
+================================================================================================================================================================================================================================================
+
+
+
+
+

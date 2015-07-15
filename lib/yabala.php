@@ -26,12 +26,6 @@ include_once("elcc.php");
 
 class yabala implements iyabala{
 
-	//const yabalaUrl = "http://localhost/yabala/yabala/www/";
-	//const creditsPath = "../yabala/www/";
-	//const dbPath = "../yabala/db/db.csv";
-	//const repositoryListUrl = "http://localhost/yabala/yabala/db/list.csv";
-	//const dbPath = "http://164.73.2.138/db.csv";
-
 	//Colección de objetos contenedores
 	var $op;
 
@@ -105,7 +99,7 @@ class yabala implements iyabala{
 	}
 
 	public function credits($name, $cc, $options){
-		return $this->op->credits($name, self::creditsPath, self::yabalaUrl, self::yabalaImg, $cc, 1, 1, 1);
+		return $this->op->credits($name, $cc, self::creditsPath, self::yabalaUrl, 1, 1, 1);
 	}
 
 	public function resetCredits($name, $options){

@@ -25,7 +25,7 @@ include_once("lib/yabala.php");
 interface iyabala{
 
 	const yabalaUrl = "http://localhost/yabala/yabala/www/";
-	const yabalaImg = "http://localhost/yabala/yabala/img/";
+	//const yabalaImg = "http://localhost/yabala/yabala/img/";
 	const repositoryListUrl = "http://localhost/yabala/yabala/db/list.csv";
 	const creditsPath = "../yabala/www/";
 	const dbPath = "../yabala/db/db.csv";

@@ -99,14 +99,14 @@ class OP {
 		return LICENCIA::min($this->calculator());
 	}
 
-	//RECIBE:	String, String, String, String, Tag, Integer, Integer, Integer
+	//RECIBE:	String, Tag, String, String, Integer, Integer, Integer
 	//RETORNA:	Array of String
 	//NOTA:		Retorna un array con cuatro strings que contiene:
 	//		La URL ($yabalaUrl+name+html) de la página HTML con los créditos del remix si $html!=0 sino retorna el string vacío
 	//		La URL ($yabalaUrl+name+png) de la imagen QR con los créditos del remix si $qrfull!=0 sino retorna el string vacío
 	//		La URL ($yabalaUrl+name+png) de la imagen QR con la licencia del remix si $qrmin!=0 sino retorna el string vacío 
 	//		La URL ($yabalaUrl+name+png) de la imagen Creative Commons con la licencia del remix 
-	public function credits($name, $creditsPath, $yabalaUrl, $yabalaImg, $cc, $html, $qrfull, $qrmin){
+	public function credits($name, $cc, $creditsPath, $yabalaUrl, $html, $qrfull, $qrmin){
 			
 			//Hacer el código de la licencia del remix
 			$code = "";
@@ -166,9 +166,20 @@ class OP {
 				$nameQrmin="";
 			}
 			
-			//crea el link a la imagen de la licencia CC
-			$nameCC = strtolower($cc).".png";
-			return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaImg.$nameCC);
+			//crea el archivo de licencia tradicional CC
+			//Definir el nombre del archivo CC
+				$nameCC = $name."_cc.png";
+				
+				//si el archivo ya existe lo borra
+				if (file_exists($creditsPath.$nameCC)){
+					unlink($creditsPath.$nameCC);
+				}
+				//crea el nuevo archivo
+				copy($creditsPath.strtolower($cc).".png", $creditsPath.$nameCC);
+			
+			//$nameCC = strtolower($cc).".png";
+			//return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaImg.$nameCC);
+			return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaUrl.$nameCC);
 	}
 	
 
