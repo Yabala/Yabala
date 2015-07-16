@@ -2,8 +2,8 @@
 ================================================================================================================================================================================================================================================
 
 Título:		AYUDA DE YABALÁ
-Versión:	1.12
-Fecha:		14/07/2015
+Versión:	2.0
+Fecha:		16/07/2015
 Autor:		José Fager
 Contacto:	jfager@cse.edu.uy
 Licencia:	Creative Commons 4.0 - BY
@@ -44,6 +44,21 @@ INSATALACIÓN DE CALCULATOR
 2) Descargar Calculator de "https://github.com/Yabala/calculator".
 3) Instalar el paquete "calculator" al mismo nivel del directorio raíz del servidor web donde está instalado el paquete "yabala", por ejemplo si la instalación de "yabala" está en "/var/www/yabala/" entonces debe quedar instalado en "/var/www/calculator/".
 4) Se deben dar permisos de lectura y escritura a "/var/www/calculator/work/", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/calculator/work/".
+
+================================================================================================================================================================================================================================================
+
+
+
+
+
+================================================================================================================================================================================================================================================
+INSATALACIÓN DE SIMULATOR
+================================================================================================================================================================================================================================================
+
+1) Previamente se debe instalar Yabalá.
+2) Descargar Simulator de "https://github.com/Yabala/simulator".
+3) Instalar el paquete "simulator" al mismo nivel del directorio raíz del servidor web donde está instalado el paquete "yabala", por ejemplo si la instalación de "yabala" está en "/var/www/yabala/" entonces debe quedar instalado en "/var/www/simulator/".
+4) Se deben dar permisos de lectura y escritura a "/var/www/simulator/work/", por ejemplo en un entorno UNIX sería: "chmod -R 777 /var/www/simulator/work/".
 
 ================================================================================================================================================================================================================================================
 
