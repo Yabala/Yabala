@@ -26,25 +26,24 @@ include_once("elcc.php");
 
 class yabala implements iyabala{
 
-	//Colección de objetos contenedores
+	//Conjunto de materiales
 	var $op;
-
+	
+	
+	
+	//Constructor de la clase
 	function __construct() {
 	       $this->op = new OP();
    	}
 
+	//RECIBE:	Nada
+	//RETORNA:	Collection
+	//NOTA:		Devuelve el conjunto de materiales
 	public function getOP(){
-		//Retorna el resultado
 		return $this->op;
 	}
 
-	//RECIBE:	Nada
-	//RETORNA:	Array of Array of String
-	//NOTA:		Devuelve un array con los nombres y url de los respostiros registrado en la base apuntada por $repositoryListUrl
-	public function getRepositoryList(){
-		//Retorna el resultado
-		return DB5::getRepositoryList(self::repositoryListUrl);
-	}
+
 
 	//RECIBE:	Nada
 	//RETORNA:	Array of String
@@ -54,6 +53,8 @@ class yabala implements iyabala{
 		return FORMATS::getDomain();
 	}
 
+
+
 	//RECIBE:	Nada
 	//RETORNA:	Array of String
 	//NOTA:		Devuelve un array con los valores del dominio del ELCC
@@ -61,47 +62,108 @@ class yabala implements iyabala{
 		//Retorna el resultado
 		return ELCC::getDomain();
 	}
-	
-	//RECIBE:	un op y los datos para un oc
-	//RETORNA:	Nada
-	//NOTA:		sin comentarios
-	public function add($format, $keywords, $author, $url, $cc){
-		$this->op->add($format, $keywords, $author, $url, $cc);
-	}
 
-
-	//Quita un oc(id) del OP(collection)
-	public function del($id){
-		$this->op->del($id);
-	}
-
-
-	//retorna la licencia combinada del OP
-	public function calculator(){
-		return $this->op->calculator();
-	}
-
-
-	//retorna la máxima licencia combinada del OP
-	public function calculatorMax(){
-		return $this->op->calculatorMax();
-	}
-
-
-	//retorna la mínima licencia combinada del OP
-	public function calculatorMin(){
-		return $this->op->calculatorMin();
-	}
-
-	//retorna la mínima licencia de la adaptacion cc
+	//RECIBE:	Tag
+	//RETORNA:	Array de Tag
+	//NOTA:		Retorna todos los valores del ELCC que podrían ser licencias para la adaptación de un material con licencia $cc
 	public function adaptation($cc){
 		return ELCC::a($cc);
 	}
 
+
+	
+	//RECIBE:	String, String, String, String, Tag
+	//RETORNA:	Nada
+	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc al conjunto de materiales op
+	public function add($format, $keywords, $author, $url, $cc){
+		$this->op->add($format, $keywords, $author, $url, $cc);
+	}
+
+	//RECIBE:	Integer
+	//RETORNA:	Nada
+	//NOTA:		Quita el material con identificador $id del conjunto de materiales op
+	public function del($id){
+		$this->op->del($id);
+	}
+
+	//RECIBE:	Nada
+	//RETORNA:	Array de Tag
+	//NOTA:		Retorna todos los valores del ELCC que podrían ser licencias para el conjunto de materiales op
+	public function calculator(){
+		return $this->op->calculator();
+	}
+
+	//RECIBE:	Nada
+	//RETORNA:	Tag
+	//NOTA:		Retorna el máximo valor del ELCC que podrían ser licencias para el conjunto de materiales op
+	public function calculatorMax(){
+		return $this->op->calculatorMax();
+	}
+
+	//RECIBE:	Nada
+	//RETORNA:	Tag
+	//NOTA:		Retorna el mínimo valor del ELCC que podrían ser licencias para el conjunto de materiales op
+	public function calculatorMin(){
+		return $this->op->calculatorMin();
+	}
+
+	//RECIBE:	String, String, Array of elements
+	//RETORNA:	Array of String
+	//NOTA:		EN ESTA VERSIÓN $options no se usa
+	//		Retorna un array con cuatro strings que contiene:
+	//		La URL de la página HTML con los créditos del conjunto de materiales op ($name es usado para identificar el archivo creado)
+	//		La URL de la imagen QR con los créditos  del conjunto de materiales op ($name es usado para identificar el archivo creado)
+	//		La URL de la imagen QR con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
+	//		La URL de la imagen Creative Commons con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
 	public function credits($name, $cc, $options){
 		return $this->op->credits($name, $cc, self::creditsPath, self::yabalaUrl, 1, 1, 1);
 	}
 
+	//RECIBE:	Nada
+	//RETORNA:	Array of Array of String
+	//NOTA:		Retorna un array con los componentes de cada material del conjunto de materiales op como un array de strings 
+	public function getWorks(){
+		return $this->op->printOP();
+	}
+
+
+
+	//RECIBE:	Nada
+	//RETORNA:	Array of Array of String
+	//NOTA:		Devuelve un array con los nombres y url de los respostiros registrado en la base apuntada por $repositoryListUrl
+	public function getRepositoryList(){
+		return DB5::getRepositoryList(self::repositoryListUrl);
+	}
+
+	//RECIBE:	String, String, String, String, String, String
+	//RETORNA:	Nada
+	//NOTA:		Agrega el RECORD ($format, $keywords, $author, $url, $cc) a la base que está en la ruta $dbPath
+	//		$dbPath hace referencia a un path local, por ejemplo: "../yabala/db/dv.csv"
+	public function insert($format, $keywords, $author, $url, $cc){
+		DB5::insert(self::dbPath, $format, $keywords, $author, $url, $cc);
+	}
+
+	//RECIBE:	String, String, Integer, Integer
+	//RETORNA:	Collection
+	//NOTA:		Busca en la base de datos ubicada en la url $repositoryUrl, el string contenido en $key y retorna la colección de registros resultado
+	//		Si $i<0 busca si aparece $key en forma exacta o como sub-string en cualquier campo
+	//		Si $i>=0 y $mode=0 busca si aparece $key en forma exacta o como sub-string dentro del campo $i
+	//		Si $i>=0 y $mode=1 busca si aparece $key en forma exacta  dentro del campo $i
+	//		$repositoryUrl es una url donde está la base en la que se buscará, por ejemplo: "http://misitio.com/db.csv
+	public function select($repositoryUrl, $key, $i, $mode){
+		return (DB5::select($repositoryUrl, $key, $i, $mode));
+	}
+
+
+
+	//RECIBE:	String, Array of elements
+	//RETORNA:	Nada
+	//NOTA:		EN ESTA VERSIÓN $options no se usa
+	//		Borra:
+	//		La URL de la página HTML con los créditos del conjunto de materiales de nombre $nombre
+	//		La URL de la imagen QR con los créditos  del conjunto de materiales de nombre $nombre 
+	//		La URL de la imagen QR con la licencia  del conjunto de materiales de nombre $nombre 
+	//		La URL de la imagen Creative Commons con la licencia  del conjunto de materiales de nombre $nombre 
 	public function resetCredits($name, $options){
 		//definir nombres de archvios de créditos
 		$nameHtml = $name.".html";
@@ -124,40 +186,8 @@ class yabala implements iyabala{
 		}
 	}
 
-	//Agrega a la base de datos del sistema los datos un registro
-	public function insert($format, $keywords, $author, $url, $cc){
-		//$db5 = new db5();
-		DB5::insert(self::dbPath, $format, $keywords, $author, $url, $cc);
-	}
 
 
-
-	//RECIBE:	String, String, Integer, Integer
-	//RETORNA:	Collection
-	//NOTA:		Busca en la base de datos ubicada en la url $repositoryUrl, el string contenido en $key y retorna la colección de registros resultado
-	//		Si $i<0 busca si aparece $key en forma exacta o como sub-string en cualquier campo
-	//		Si $i>=0 y $mode=0 busca si aparece $key en forma exacta o como sub-string dentro del campo $i
-	//		Si $i>=0 y $mode=1 busca si aparece $key en forma exacta  dentro del campo $i
-	//		$repositoryUrl es una url donde está la base en la que se buscará, por ejemplo: "http://misitio.com/db.csv
-	public function select($repositoryUrl, $key, $i, $mode){
-		return (DB5::select($repositoryUrl, $key, $i, $mode));
-	}
-
-
-	//Imprime el contenido de todos los oc de la OP
-	//SOLO PARA DEBUG
-	//function printdb($db){
-	//	DB5::printdbDB($db);
-	//}
-
-
-	//RECIBE:	Nada
-	//RETORNA:	Array of Array of String
-	//NOTA:		Retorna un array con los elementos de cada OC como un array de strings 
-	public function getWorks(){
-			return $this->op->printOP();
-	}
-
-	}
+}
 
 ?>

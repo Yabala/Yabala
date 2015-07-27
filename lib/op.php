@@ -85,7 +85,7 @@ class OP {
 
 	//RECIBE:	Nada
 	//RETORNA:	Tag
-	//NOTA:		Retorna el máximo valores del ELCC que podrían ser licencias para un remix de las obras
+	//NOTA:		Retorna el máximo valor del ELCC que podrían ser licencias para un remix de las obras
 	//		representas por los oc contenidos en la colección $ocs
 	public function calculatorMax(){
 		return LICENCIA::max($this->calculator());
@@ -93,13 +93,13 @@ class OP {
 
 	//RECIBE:	Nada
 	//RETORNA:	Tag
-	//NOTA:		Retorna el mínimo valores del ELCC que podrían ser licencias para un remix de las obras
+	//NOTA:		Retorna el mínimo valor del ELCC que podrían ser licencias para un remix de las obras
 	//		representas por los oc contenidos en la colección $ocs
 	public function calculatorMin(){
 		return LICENCIA::min($this->calculator());
 	}
 
-	//RECIBE:	String, Tag, String, String, Integer, Integer, Integer
+	//RECIBE:	String, String, String, String, Integer, Integer, Integer
 	//RETORNA:	Array of String
 	//NOTA:		Retorna un array con cuatro strings que contiene:
 	//		La URL ($yabalaUrl+name+html) de la página HTML con los créditos del remix si $html!=0 sino retorna el string vacío
@@ -194,7 +194,7 @@ class OP {
 
 	//RECIBE:	Nada
 	//RETORNA:	Array of Array of String
-	//NOTA:		Retorna un array con los elementos de cada OC como un array de strings 
+	//NOTA:		Retorna un array con los elementos de cada elemento de la coleccióm ocs como un array de strings 
 	public function printOP(){
 		$r = array();
 		foreach ($this->ocs as $key => $item) {

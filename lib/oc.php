@@ -54,7 +54,7 @@ class OC {
 
 	//RECIBE:	Nada
 	//RETORNA:	Array de String
-	//NOTA:		
+	//NOTA:		Retorna los componentes de un OC para ser manipulados desde el invocante
 	public function printOC(){
 		return array ($this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense()); 
 	}

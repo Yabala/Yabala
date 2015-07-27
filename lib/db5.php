@@ -24,6 +24,7 @@ include_once("collection/collection.php");
 class DB5 {
 
 
+
 	//RECIBE:	String
 	//RETORNA:	Array of Array of String
 	//NOTA:		Devuelve en $retorno un array con los nombres y url de los respostiros registrado en la base apuntada por $repositoryListUrl
@@ -42,8 +43,7 @@ class DB5 {
 		return $retorno;
 	}
 
-
-	//RECIBE:	String, String, String, String, String, Tag
+	//RECIBE:	String, String, String, String, String, String
 	//RETORNA:	Nada
 	//NOTA:		Agrega el RECORD ($format, $keywords, $author, $url, $cc) a la base que está en la ruta $dbPath
 	//		$dbPath hace referencia a un path local, por ejemplo: "../yabala/db/dv.csv"
@@ -121,16 +121,6 @@ class DB5 {
 	private static function addrecord(&$db, $format, $keywords, $author, $url, $cc){
 		$db->add(rand(), array ($format, $keywords, $author, $url, $cc));
 	}
-
-	//Imprime el contenido de la base
-	//SOLO PARA DEBUG
-	//public static function printdbDB($db){
-	//	foreach ($db as $key => $item) {
-	//		echo "<b>$key:</b> ";
-	//		print_r ($item);
-	//		echo "<br>\n";
-	//	}
-	//}
 
 
 

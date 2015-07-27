@@ -32,7 +32,6 @@ class ELCC{
 	//Valores del dominio del ELCC
 	//const domaine = array ("PD","CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
 	//domain debería declararse como una constante pero PHP no admite constantes que sean arreglos
-	
 
 	
 	//RECIBE:	Nada
