@@ -22,6 +22,7 @@
 include_once("lib/yabala.php");
 
 
+
 interface iyabala{
 
 
@@ -31,6 +32,7 @@ interface iyabala{
 	const creditsPath = "../yabala/www/";
 	const dbPath = "../yabala/db/db.csv";
 	
+
 	
 	//RECIBE:	Nada
 	//RETORNA:	Collection
