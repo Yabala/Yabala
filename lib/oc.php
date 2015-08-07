@@ -31,8 +31,8 @@ class OC {
 
 
 	//Constructor de la clase
-	function __construct($format, $keywords, $author, $url, $cc) {
-		$this->data = new DATA($format, $keywords, $author, $url, $cc);
+	function __construct($title, $format, $keywords, $author, $url, $cc, $modify) {
+		$this->data = new DATA($title, $format, $keywords, $author, $url, $cc, $modify);
 	}
 
 	//RECIBE:	Nada
@@ -56,7 +56,10 @@ class OC {
 	//RETORNA:	Array de String
 	//NOTA:		Retorna los componentes de un OC para ser manipulados desde el invocante
 	public function printOC(){
-		return array ($this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense()); 
+		//transforma Modify a STRING
+		if($this->data->getModify()) $modify="TRUE";
+		else $modify="FALSE";
+		return array ($this->data->getTitle(), $this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense(), $modify); 
 	}
 
 

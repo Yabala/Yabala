@@ -27,21 +27,32 @@ class DATA{
 
 
 	//Valores que representa los datos que contiene cada OC
+	var $title;
 	var $format;
 	var $keywords;
 	var $author;
 	var $url;
 	var $license;
+	var $modify;
 
 
 
 	//Constructor de la clase
-	function __construct($format, $keywords, $author, $url, $cc) {
+	function __construct($title, $format, $keywords, $author, $url, $cc, $modify) {
+		$this->title = $title;
 		$this->format = $format;
 		$this->keywords = $keywords;
 		$this->author = $author;
 		$this->url = $url;
 		$this->license = new LICENCIA ($cc);
+		$this->modify = (boolean) $modify;
+	}
+
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna el valor del $title del objeto
+	public function getTitle(){
+			return $this->title;
 	}
 
 	//RECIBE:	Nada
@@ -79,6 +90,13 @@ class DATA{
 			return $this->license->getCC();
 	}
 
+	//RECIBE:	Nada
+	//RETORNA:	Bool
+	//NOTA:		Retorna el valor del $modify del objeto
+	public function getModify(){
+			return $this->modify;
+	}
+	
 	//RECIBE:	Nada
 	//RETORNA:	Array de Tag
 	//NOTA:		Implementa la tabla de compatibilidad para remix de obras, dado el valor del ELCC $value 

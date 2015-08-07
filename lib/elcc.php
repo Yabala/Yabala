@@ -30,9 +30,16 @@ class ELCC{
 	const _MAX_ = "MAX"; 
 	
 	//Valores del dominio del ELCC
-	//const domaine = array ("PD","CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
-	//domain debería declararse como una constante pero PHP no admite constantes que sean arreglos
+	//const _DOMAIN_ = array ("PD","CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
+	//_DOMAIN_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
 
+	//Valores del dominio del ELCC que exigen tener autor definido
+	//const _AUTHOR_ = array ("BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
+	//_AUTHOR_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
+
+	//Valores del dominio del ELCC que no permiten ser adaptados o modificados
+	//const _MODIFY_ = array ("BY-ND","BY-NC-ND","CR");
+	//_MODIFY_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
 	
 	//RECIBE:	Nada
 	//RETORNA:	Tag
@@ -52,8 +59,8 @@ class ELCC{
 	//RETORNA:	Array de Tag
 	//NOTA:		Retorna todos los valores del dominio del ELCC
 	public static function getDomain(){
-		////domain debería declararse como una constante pero PHP no admite constantes que sean arreglos
-		//este método debería retornar: self::domain
+		//_DOMAIN_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
+		//este método debería retornar: self::_DOMAIN_
 		return array ("PD","CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
 	}
 
@@ -111,24 +118,50 @@ class ELCC{
 	}
 
 	//RECIBE:	Tag
-	//RETORNA:	Boolean
-	//NOTA:		Retorna true si $value pertenece al dominio del ELCC y false en caso contrario
+	//RETORNA:	Bool
+	//NOTA:		Retorna TRUE si $value pertenece al dominio del ELCC y FALSE en caso contrario
 	public static function is($value){
-		//este método se debería implementar buscando en la constante de clase $domain pero
+		//este método se debería implementar buscando en la constante de clase _DOMAIN_ pero
 		//no puede ser declaradas constantes en PHP que sean arrays
-		if ($value=="PD") return true;
-		if ($value=="CC0") return  true;
-		if ($value=="BY") return  true;
-		if ($value=="BY-NC") return  true;
-		if ($value=="BY-SA") return  true;
-		if ($value=="BY-NC-SA") return  true;
-		if ($value=="BY-ND") return  true;
-		if ($value=="BY-NC-ND") return  true;
-		if ($value=="CR") return  true;
-		return false;
+		if ($value=="PD") return TRUE;
+		if ($value=="CC0") return TRUE;
+		if ($value=="BY") return TRUE;
+		if ($value=="BY-NC") return TRUE;
+		if ($value=="BY-SA") return TRUE;
+		if ($value=="BY-NC-SA") return TRUE;
+		if ($value=="BY-ND") return TRUE;
+		if ($value=="BY-NC-ND") return TRUE;
+		if ($value=="CR") return TRUE;
+		return FALSE;
 	}
 
+	//RECIBE:	Tag
+	//RETORNA:	Bool
+	//NOTA:		Retorna TRUE si $value obliga a tener un autor definido
+	public static function author($value){
+		//este método se debería implementar buscando en la constante de clase _AUTHOR_ pero
+		//no puede ser declaradas constantes en PHP que sean arrays
+		if ($value=="BY") return TRUE;
+		if ($value=="BY-NC") return TRUE;
+		if ($value=="BY-SA") return TRUE;
+		if ($value=="BY-NC-SA") return TRUE;
+		if ($value=="BY-ND") return TRUE;
+		if ($value=="BY-NC-ND") return TRUE;
+		if ($value=="CR") return TRUE;
+		return FALSE;
+	}
 
+	//RECIBE:	Tag
+	//RETORNA:	Bool
+	//NOTA:		Retorna TRUE si $value no permite modificaciones o adpataciones
+	public static function modify($value){
+		//este método se debería implementar buscando en la constante de clase _MODIFY_ pero
+		//no puede ser declaradas constantes en PHP que sean arrays
+		if ($value=="BY-ND") return TRUE;
+		if ($value=="BY-NC-ND") return TRUE;
+		if ($value=="CR") return TRUE;
+		return FALSE;
+	}
 
 }
 

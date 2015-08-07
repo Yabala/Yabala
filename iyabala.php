@@ -53,6 +53,7 @@ interface iyabala{
 	//NOTA:		Devuelve un array con los valores del dominio del ELCC
 	public function getLicenses();
 	
+	
 	//RECIBE:	Tag
 	//RETORNA:	Array de Tag
 	//NOTA:		Retorna todos los valores del ELCC que podrían ser licencias para la adaptación de un material con licencia $cc
@@ -60,10 +61,20 @@ interface iyabala{
 
 
 	
-	//RECIBE:	String, String, String, String, Tag
-	//RETORNA:	Nada
-	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc al conjunto de materiales op
-	public function add($format, $keywords, $author, $url, $cc);
+	//RECIBE:	String, String, String, String, Tag, Bool
+	//RETORNA:	String
+	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify al conjunto de materiales op
+	//		Si no puede agregar la obra retorna un string distinto de vacío que información del error
+	//
+	//RESTRICCIONES:
+	//$title	no tiene restricciones
+	//$format	debe pertenecer a FORMATS
+	//$keywords	no tiene restricciones
+	//$author	puede estar no definido solo si $cc=pd|cc0
+	//$url		no tiene restricciones
+	//$cc		debe pertenecer al ELCC
+	//$modify	es admitida como TRUE solo si $cc=pd|cc0|BY|BY-SA|BY-NC|BY-NC-SA
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify);
 
 	//RECIBE:	Integer
 	//RETORNA:	Nada
@@ -85,15 +96,16 @@ interface iyabala{
 	//NOTA:		Retorna el mínimo valor del ELCC que podrían ser licencias para el conjunto de materiales op
 	public function calculatorMin();
 	
-	//RECIBE:	String, String, Array of elements
+	//RECIBE:	String, String, String, String, Array of elements
 	//RETORNA:	Array of String
 	//NOTA:		EN ESTA VERSIÓN $options no se usa
-	//		Retorna un array con cuatro strings que contiene:
-	//		La URL de la página HTML con los créditos del conjunto de materiales op ($name es usado para identificar el archivo creado)
-	//		La URL de la imagen QR con los créditos  del conjunto de materiales op ($name es usado para identificar el archivo creado)
-	//		La URL de la imagen QR con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
-	//		La URL de la imagen Creative Commons con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)	
-	public function credits($name, $cc, $options);
+	//		Retorna un array con cinco strings que contienen:
+	//		[0] String vacío si se crearón los créditos, sino trae un mensaje 
+	//		[1] La URL de la página HTML con los créditos del conjunto de materiales op ($name es usado para identificar el archivo creado)
+	//		[2] La URL de la imagen QR con los créditos  del conjunto de materiales op ($name es usado para identificar el archivo creado)
+	//		[3] La URL de la imagen QR con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
+	//		[4] La URL de la imagen Creative Commons con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)	
+	public function credits($name, $cc, $title, $author, $options);
 	
 	//RECIBE:	Nada
 	//RETORNA:	Array of Array of String
@@ -109,9 +121,9 @@ interface iyabala{
 	
 	//RECIBE:	String, String, String, String, String, String
 	//RETORNA:	Nada
-	//NOTA:		Agrega el RECORD ($format, $keywords, $author, $url, $cc) a la base que está en la ruta $dbPath
+	//NOTA:		Agrega el RECORD ($title, $format, $keywords, $author, $url, $cc) a la base que está en la ruta $dbPath
 	//		$dbPath hace referencia a un path local, por ejemplo: "../yabala/db/dv.csv"
-	public function insert($format, $keywords, $author, $url, $cc);
+	public function insert($title, $format, $keywords, $author, $url, $cc);
 	
 	//RECIBE:	String, String, Integer, Integer
 	//RETORNA:	Collection

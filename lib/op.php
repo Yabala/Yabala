@@ -41,11 +41,10 @@ class OP {
 
 	//RECIBE:	String, String, String, String, Tag
 	//RETORNA:	Nada
-	//NOTA:		Agrega el OC con datos $format, $keywords, $author, $url, $cc a la colección $ocs 
-	public function add($format, $keywords, $author, $url, $cc){
+	//NOTA:		Agrega el OC con datos $title, $format, $keywords, $author, $url, $cc, $modify a la colección $ocs 
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify){
 
-		//crear el oc
-		$oc = new OC($format, $keywords, $author, $url, $cc);
+		$oc = new OC($title, $format, $keywords, $author, $url, $cc, $modify);
 		
 		//agregar el oc al ocs
 		$this->ocs->add(uniqid().rand(), $oc);
@@ -99,29 +98,68 @@ class OP {
 		return LICENCIA::min($this->calculator());
 	}
 
-	//RECIBE:	String, String, String, String, Integer, Integer, Integer
+	//RECIBE:	String, String, String, String, String, String, Integer, Integer, Integer
 	//RETORNA:	Array of String
-	//NOTA:		Retorna un array con cuatro strings que contiene:
-	//		La URL ($yabalaUrl+name+html) de la página HTML con los créditos del remix si $html!=0 sino retorna el string vacío
-	//		La URL ($yabalaUrl+name+png) de la imagen QR con los créditos del remix si $qrfull!=0 sino retorna el string vacío
-	//		La URL ($yabalaUrl+name+png) de la imagen QR con la licencia del remix si $qrmin!=0 sino retorna el string vacío 
-	//		La URL ($yabalaUrl+name+png) de la imagen Creative Commons con la licencia del remix 
-	public function credits($name, $cc, $creditsPath, $yabalaUrl, $html, $qrfull, $qrmin){
+	//NOTA:		Retorna un array con cinco strings que contiene:
+	//		[0] String vacío que indica que se crearón los créditos
+	//		[1] La URL ($yabalaUrl+name+html) de la página HTML con los créditos del remix si $html!=0 sino retorna el string vacío
+	//		[2] La URL ($yabalaUrl+name+png) de la imagen QR con los créditos del remix si $qrfull!=0 sino retorna el string vacío
+	//		[3] La URL ($yabalaUrl+name+png) de la imagen QR con la licencia del remix si $qrmin!=0 sino retorna el string vacío 
+	//		[4] La URL ($yabalaUrl+name+png) de la imagen Creative Commons con la licencia del remix 
+	public function credits($name, $cc, $title, $author, $creditsPath, $yabalaUrl, $html, $qrfull, $qrmin){
 			
 			//Hacer el código de la licencia del remix
-			$code = "";
+			if ($title==""){
+				$title = "Untitle";
+			}
+			$code = "<h3>$title</h3><hr />";
+			$codeQR = "$title\n\n";
 			//se define la leyenda según la licencia
 			if ($cc=="CR"){
-				$code = $code."Obra con todos los derechos reservados \n\n";
+				$code = $code."T&eacute;rminos de uso: Obra con todos los derechos reservados. ";
+				$codeQR = $codeQR."Términos de uso: Obra con todos los derechos reservados. ";
+			}elseif($cc=="PD"){
+				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; bajo <a href='".$yabalaUrl."pd.htm' target='_blank'>Dominio P&uacute;blico</a>. ";
+				$codeQR = $codeQR."Términos de uso: Esta obra está bajo Dominio Público. ";
+			}elseif($cc=="CC0"){
+				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='".$yabalaUrl."cc0.htm' target='_blank'>Cretive Commons $cc 1.0 Universal</a>. ";
+				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo Cretive Commons $cc 1.0 Universal. ";
 			}else{
-				$code = $code."Obra bajo licencia Cretive Commons 4.0 Internacional $cc\n\n";
+				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='$yabalaUrl".strtolower($cc).".htm' target='_blank'>Cretive Commons $cc Internacional licencia 4.0</a>. ";			
+				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo una licencia Cretive Commons $cc Internacional 4.0. ";			
 			}
-			$code = $code."Obra integrantes del remix:\n\n";
+			if ($author!=""){
+				$code = $code."Se atribuye a $author. ";
+				$codeQR = $codeQR."Se atribuye a $author. ";
+			}
+			$code = $code."<hr />\nMateriales integrantes de la obra:\n\n";
+			$codeQR = $codeQR."\n\nMateriales integrantes de la obra:\n\n";
 			foreach ($this->ocs as $oc) {
-					$author = $oc->data->getAuthor();
-					$url = $oc->data->getUrl();
+					$titlet = $oc->data->getTitle();
+					$authort = $oc->data->getAuthor();
+					$urlt = $oc->data->getUrl();
 					$cct = $oc->data->getLicense();
-					$code = $code."Licencia: $cct\nAutor: $author\nUrl: $url\n\n";
+					if ($titlet!=""){
+						$code = $code."T&iacute;tulo: $titlet\n";
+						$codeQR = $codeQR."Título: $titlet\n";
+					}
+					$code = $code."Licencia: <a href='$yabalaUrl".strtolower($cct).".htm' target='_blank'>$cct</a>\n";
+					$codeQR = $codeQR."Licencia: $cct\n";
+					if ($authort!=""){
+						$code = $code."Autor: $authort\n";
+						$codeQR = $codeQR."Autor: $authort\n";
+					}
+					if ($urlt!=""){
+						$code = $code."Fuente: <a href='$urlt' target='_blank'>$urlt</a>\n";
+						$codeQR = $codeQR."Fuente: $urlt\n";
+					}
+					if($oc->data->getModify()){
+						$code = $code."Modificado de su versi&oacute;n original\n\n";
+						$codeQR = $codeQR."Modificado de su versión original\n\n";
+					}else{
+						$code = $code."\n";
+						$codeQR = $codeQR."\n";
+					}
 			}
 
 			//Definir el nombre de los archivos
@@ -150,7 +188,7 @@ class OP {
 				}
 				
 				//Crea el nuevo archivo
-				QRcode::png($code, $creditsPath.$nameQrfull);
+				QRcode::png($codeQR, $creditsPath.$nameQrfull);
 			}else{
 				$nameQrfull="";
 			}
@@ -169,7 +207,7 @@ class OP {
 				if($cc=="CR"){
 					QRcode::png("$cc", $creditsPath.$nameQrmin);
 				}else{
-					QRcode::png("CC 4.0: $cc", $creditsPath.$nameQrmin);
+					QRcode::png("CC $cc 4.0", $creditsPath.$nameQrmin);
 				}
 			}else{
 				$nameQrmin="";
@@ -188,7 +226,7 @@ class OP {
 			
 			//$nameCC = strtolower($cc).".png";
 			//return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaImg.$nameCC);
-			return array ($yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaUrl.$nameCC);
+			return array ("", $yabalaUrl.$nameHtml, $yabalaUrl.$nameQrfull, $yabalaUrl.$nameQrmin, $yabalaUrl.$nameCC);
 	}
 	
 

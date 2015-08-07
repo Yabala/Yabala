@@ -45,13 +45,13 @@ class DB5 {
 
 	//RECIBE:	String, String, String, String, String, String
 	//RETORNA:	Nada
-	//NOTA:		Agrega el RECORD ($format, $keywords, $author, $url, $cc) a la base que está en la ruta $dbPath
+	//NOTA:		Agrega el RECORD ($title, $format, $keywords, $author, $url, $cc) a la base que está en la ruta $dbPath
 	//		$dbPath hace referencia a un path local, por ejemplo: "../yabala/db/dv.csv"
-	public static function insert($dbPath, $format, $keywords, $author, $url, $cc){
+	public static function insert($dbPath, $title, $format, $keywords, $author, $url, $cc){
 		//abrir el archivo de bases de datos
 		$fp = fopen($dbPath, 'a');
 		//agregar la linea a la base de datos
-		fwrite($fp, $format."«".$keywords."«".$author."«".$url."«".$cc."\n");
+		fwrite($fp, $title."«".$format."«".$keywords."«".$author."«".$url."«".$cc."\n");
 		//cerrar el archivo de base de datos
 		fclose($fp);
 	}
@@ -81,11 +81,11 @@ class DB5 {
 	private static function selectAll(&$db, $dbUrl, $key){
 		if (($h = fopen($dbUrl, "r")) !== FALSE) {//abre el archivo
 			while (($fila = fgetcsv($h)) !== FALSE) {//lee cada línea como un string
-				if(stripos($fila[0], $key) !== false){//si la cadena clave se encuentra en la cadena fila
+				if(stripos($fila[0], $key) !== FALSE){//si la cadena clave se encuentra en la cadena fila
 					//transforma el string en un array
 					$fila = explode("«", $fila[0]); //string to array
 					//agregar a search
-					DB5::addrecord($db, $fila[0], $fila[1], $fila[2], $fila[3], $fila[4]);
+					DB5::addrecord($db, $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5]);
 				}
 			}
 			//cierra el archivo
@@ -105,9 +105,9 @@ class DB5 {
 			while (($fila = fgets($h)) !== FALSE) {//lee cada línea como un string
 				//transforma el string en un array
 				$fila = explode("«", $fila);
-				if ((($mode==0)&&(stripos($fila[$i], $key) !== false))||(($mode==1)&&(trim($fila[$i], "\n")==$key))){
+				if ((($mode==0)&&(stripos($fila[$i], $key) !== FALSE))||(($mode==1)&&(trim($fila[$i], "\n")==$key))){
 					//agregar a search
-					DB5::addrecord($db, $fila[0], $fila[1], $fila[2], $fila[3], $fila[4]);
+					DB5::addrecord($db, $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5]);
 				}
 			}
 			//cierra el archivo
@@ -118,8 +118,8 @@ class DB5 {
 	//RECIBE:	Collection, String, String, String, String, Tag
 	//RETORNA:	Collection (por variable)
 	//NOTA:		Agrega el registro ($format, $keywords, $author, $url, $cc) a la colección $db
-	private static function addrecord(&$db, $format, $keywords, $author, $url, $cc){
-		$db->add(rand(), array ($format, $keywords, $author, $url, $cc));
+	private static function addrecord(&$db, $title, $format, $keywords, $author, $url, $cc){
+		$db->add(rand(), array ($title, $format, $keywords, $author, $url, $cc));
 	}
 
 

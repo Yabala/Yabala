@@ -24,8 +24,8 @@ class FORMATS{
 
 
 	//Valores del dominio de FORMATS
-	//const domaine = array ("APPLICATION", "AUDIO", "EXAMPLE", "IMAGE", "MESSAGE", "MODEL", "MULTIPART", "TEXT", "VIDEO");
-	//domain debería declararse como una constante pero PHP no admite constantes que sean arreglos
+	//const _DOMAIN_ = array ("APPLICATION", "AUDIO", "EXAMPLE", "IMAGE", "MESSAGE", "MODEL", "MULTIPART", "TEXT", "VIDEO");
+	//_DOMAIN_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
 	
 
 	
@@ -33,19 +33,19 @@ class FORMATS{
 	//RETORNA:	Array de InternetMediaType
 	//NOTA:		Retorna todos los valores del dominio de FORMATS
 	public static function getDomain(){
-		//domain debería declararse como una constante pero PHP no admite constantes que sean arreglos
-		//este método debería retornar: self::domain
+		//_DOMAIN_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
+		//este método debería retornar: self::_DOMAIN_
 		return array ("APPLICATION", "AUDIO", "EXAMPLE", "IMAGE", "MESSAGE", "MODEL", "MULTIPART", "TEXT", "VIDEO");
 	}
 
 	//RECIBE:	InternetMediaType
 	//RETORNA:	Boolean
-	//NOTA:		Retorna true si $value pertenece al dominio de FORMATS y false en caso contrario
+	//NOTA:		Retorna TRUE si $value pertenece al dominio de FORMATS y FALSE en caso contrario
 	public static function is($value){
-		if (in_array($value, getDomaine(), true)) {
-		    return true;
+		if (in_array($value, self::getDomain(), TRUE)) {
+		    return TRUE;   
 		}
-		return false;
+		return FALSE;
 	}
 
 
