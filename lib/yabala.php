@@ -72,11 +72,11 @@ class yabala implements iyabala{
 
 
 	
-	//RECIBE:	String, String, String, String, Tag, Bool
+	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean
 	//RETORNA:	String
-	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify al conjunto de materiales op
+	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify, $exception al conjunto de materiales op
 	//		Si no puede agregar la obra retorna un string distinto de vacío
-	public function add($title, $format, $keywords, $author, $url, $cc, $modify){
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception){
 
 		//Chequear condiciones
 		$msg = "";
@@ -99,9 +99,14 @@ class yabala implements iyabala{
 		//$modify es admitida solo si $cc=pd|cc0|BY|BY-SA|BY-NC|BY-NC-SA
 		if (($modify)&&(ELCC::modify($cc))) $msg = $msg."[La licencia $cc no admite modificaciones] ";		
 		
+		//Si $cc=BY-ND|BY-NC-ND|CR es admitido solo si $exception es TRUE 
+		if (!($exception)&&(ELCC::exception($cc))) $msg = $msg."[La licencia $cc no admite integrar conjuntos de materiales si no es de forma excepcional] ";		
+		
+		//Si $cc=PD entonces debe exigirse el autor o el título o la url, 
+		
 		//crear el oc
 		if ($msg=="") {//si cumple todas las condiciones crea el oc		
-			$this->op->add($title, $format, $keywords, $author, $url, $cc, $modify);
+			$this->op->add($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
 		}
 		
 		return $msg;
@@ -145,8 +150,13 @@ class yabala implements iyabala{
 	//		[3] La URL de la imagen QR con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
 	//		[4] La URL de la imagen Creative Commons con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
 	public function credits($name, $cc, $title, $author, $options){
-		//si la licencia $cc exige que el autor esté definido y $author="" retorna null
+		
+		//si la licencia $cc exige que el autor esté definido y $author="" retorna error
 		if (($author=="")&&(ELCC::author($cc))) return array ("[El autor debe estar definido con una licencia $cc]", "", "", "", "");
+		
+		//si la licencia $cc es PD esté definido y $author="" retorna error
+		if ($cc=="PD") return array ("[El autor no puede optar por una licencia $cc, si lo que desea es renunciar a todos sus derechos sobre la obra, elija una licencia CC0]", "", "", "", "");				
+		
 		return $this->op->credits($name, $cc, $title, $author, self::creditsPath, self::yabalaUrl, 1, 1, 1);
 	}
 

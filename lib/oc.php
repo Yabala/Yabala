@@ -31,8 +31,8 @@ class OC {
 
 
 	//Constructor de la clase
-	function __construct($title, $format, $keywords, $author, $url, $cc, $modify) {
-		$this->data = new DATA($title, $format, $keywords, $author, $url, $cc, $modify);
+	function __construct($title, $format, $keywords, $author, $url, $cc, $modify, $exception) {
+		$this->data = new DATA($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
 	}
 
 	//RECIBE:	Nada
@@ -42,7 +42,12 @@ class OC {
 			return $this->data;
 	}
 
-
+	//RECIBE:	Nada
+	//RETORNA:	Data
+	//NOTA:		Retorna el true si es una excepción o false en caso contrario
+	//public function isException(){
+	//		return $this->data->getException();
+	//}
 
 	//RECIBE:	Nada
 	//RETORNA:	Array de Tag
@@ -59,7 +64,10 @@ class OC {
 		//transforma Modify a STRING
 		if($this->data->getModify()) $modify="TRUE";
 		else $modify="FALSE";
-		return array ($this->data->getTitle(), $this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense(), $modify); 
+		//transforma Exception a STRING
+		if($this->data->getException()) $exception="TRUE";
+		else $exception="FALSE";
+		return array ($this->data->getTitle(), $this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense(), $modify, $exception); 
 	}
 
 

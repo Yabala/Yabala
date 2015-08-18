@@ -39,12 +39,12 @@ class OP {
 
 
 
-	//RECIBE:	String, String, String, String, Tag
+	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean
 	//RETORNA:	Nada
-	//NOTA:		Agrega el OC con datos $title, $format, $keywords, $author, $url, $cc, $modify a la colección $ocs 
-	public function add($title, $format, $keywords, $author, $url, $cc, $modify){
+	//NOTA:		Agrega el OC con datos $title, $format, $keywords, $author, $url, $cc, $modify, $exception a la colección $ocs 
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception){
 
-		$oc = new OC($title, $format, $keywords, $author, $url, $cc, $modify);
+		$oc = new OC($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
 		
 		//agregar el oc al ocs
 		$this->ocs->add(uniqid().rand(), $oc);
@@ -72,11 +72,15 @@ class OP {
 
 		//Por cada oc en $ocs del op hacer
 		foreach ($this->ocs as  $oc) {
-			//Se toman los valores del ELCC compatibles con la licencia del oc
-			//Con los cuales se puede remixar y se guardan en $temp
-			$temp = $oc->r();
-			//Se intersecta el conjunto de soluciones actual $L con $temp
-			$L = array_intersect($temp, $L);
+			//Si el oc no tiene excepciones lo considera para el calculo
+			$data = $oc->getData();
+			if(!($data->getException())){
+				//Se toman los valores del ELCC compatibles con la licencia del oc
+				//Con los cuales se puede remixar y se guardan en $temp
+				$temp = $oc->r();
+				//Se intersecta el conjunto de soluciones actual $L con $temp
+				$L = array_intersect($temp, $L);
+			}
 		}
 		//Se retorna el conjunto resultado
 		return $L;
@@ -132,13 +136,19 @@ class OP {
 				$code = $code."Se atribuye a $author. ";
 				$codeQR = $codeQR."Se atribuye a $author. ";
 			}
-			$code = $code."<hr />\nMateriales integrantes de la obra:\n\n";
-			$codeQR = $codeQR."\n\nMateriales integrantes de la obra:\n\n";
+			if($this->ocs->count()>0){//si tiene ocs imprime el declaimer 	
+				$code = $code."<hr />\nMateriales integrantes de la obra:\n\n";
+				$codeQR = $codeQR."\n\nMateriales integrantes de la obra:\n\n";
+			}else{//si no tiene ocs imprime el declaimer 	
+				$code = $code."<hr />\n";
+				$codeQR = $codeQR."";
+			}
 			foreach ($this->ocs as $oc) {
-					$titlet = $oc->data->getTitle();
-					$authort = $oc->data->getAuthor();
-					$urlt = $oc->data->getUrl();
-					$cct = $oc->data->getLicense();
+					$data = $oc->getData();
+					$titlet = $data->getTitle();
+					$authort = $data->getAuthor();
+					$urlt = $data->getUrl();
+					$cct = $data->getLicense();
 					if ($titlet!=""){
 						$code = $code."T&iacute;tulo: $titlet\n";
 						$codeQR = $codeQR."Título: $titlet\n";
@@ -153,9 +163,13 @@ class OP {
 						$code = $code."Fuente: <a href='$urlt' target='_blank'>$urlt</a>\n";
 						$codeQR = $codeQR."Fuente: $urlt\n";
 					}
-					if($oc->data->getModify()){
+					if($data->getModify()){
 						$code = $code."Modificado de su versi&oacute;n original\n\n";
 						$codeQR = $codeQR."Modificado de su versión original\n\n";
+					}
+					if($data->getException()){
+						$code = $code."Este material forma parte del conjunto como una exepci&oacute;n.\n\n";
+						$codeQR = $codeQR."Este material forma parte del conjunto como una exepción.\n\n";
 					}else{
 						$code = $code."\n";
 						$codeQR = $codeQR."\n";

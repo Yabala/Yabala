@@ -61,9 +61,9 @@ interface iyabala{
 
 
 	
-	//RECIBE:	String, String, String, String, Tag, Bool
+	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean
 	//RETORNA:	String
-	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify al conjunto de materiales op
+	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify, $exception al conjunto de materiales op
 	//		Si no puede agregar la obra retorna un string distinto de vacío que información del error
 	//
 	//RESTRICCIONES:
@@ -74,7 +74,8 @@ interface iyabala{
 	//$url		no tiene restricciones
 	//$cc		debe pertenecer al ELCC
 	//$modify	es admitida como TRUE solo si $cc=pd|cc0|BY|BY-SA|BY-NC|BY-NC-SA
-	public function add($title, $format, $keywords, $author, $url, $cc, $modify);
+	//Si $cc=BY-ND|BY-NC-ND|CR es admitido solo si $exception es TRUE 
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
 
 	//RECIBE:	Integer
 	//RETORNA:	Nada

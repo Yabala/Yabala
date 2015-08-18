@@ -40,6 +40,10 @@ class ELCC{
 	//Valores del dominio del ELCC que no permiten ser adaptados o modificados
 	//const _MODIFY_ = array ("BY-ND","BY-NC-ND","CR");
 	//_MODIFY_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
+
+	//Valores del dominio del ELCC que no permiten ser agregados a un conjunto si no es de forma exepcional
+	//const _EXCEPTION_ = array ("BY-ND","BY-NC-ND","CR");
+	//_EXCEPTION_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
 	
 	//RECIBE:	Nada
 	//RETORNA:	Tag
@@ -156,6 +160,18 @@ class ELCC{
 	//NOTA:		Retorna TRUE si $value no permite modificaciones o adpataciones
 	public static function modify($value){
 		//este método se debería implementar buscando en la constante de clase _MODIFY_ pero
+		//no puede ser declaradas constantes en PHP que sean arrays
+		if ($value=="BY-ND") return TRUE;
+		if ($value=="BY-NC-ND") return TRUE;
+		if ($value=="CR") return TRUE;
+		return FALSE;
+	}
+
+	//RECIBE:	Tag
+	//RETORNA:	Bool
+	//NOTA:		Retorna TRUE si $value exige una excepción
+	public static function exception($value){
+		//este método se debería implementar buscando en la constante de clase _EXCEPTION_ pero
 		//no puede ser declaradas constantes en PHP que sean arrays
 		if ($value=="BY-ND") return TRUE;
 		if ($value=="BY-NC-ND") return TRUE;

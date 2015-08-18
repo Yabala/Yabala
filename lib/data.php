@@ -34,11 +34,12 @@ class DATA{
 	var $url;
 	var $license;
 	var $modify;
+	var $exception;
 
 
 
 	//Constructor de la clase
-	function __construct($title, $format, $keywords, $author, $url, $cc, $modify) {
+	function __construct($title, $format, $keywords, $author, $url, $cc, $modify, $exception) {
 		$this->title = $title;
 		$this->format = $format;
 		$this->keywords = $keywords;
@@ -46,6 +47,7 @@ class DATA{
 		$this->url = $url;
 		$this->license = new LICENCIA ($cc);
 		$this->modify = (boolean) $modify;
+		$this->exception = (boolean) $exception;
 	}
 
 	//RECIBE:	Nada
@@ -95,6 +97,13 @@ class DATA{
 	//NOTA:		Retorna el valor del $modify del objeto
 	public function getModify(){
 			return $this->modify;
+	}
+	
+	//RECIBE:	Nada
+	//RETORNA:	Bool
+	//NOTA:		Retorna el valor del $exception del objeto
+	public function getException(){
+			return $this->exception;
 	}
 	
 	//RECIBE:	Nada
