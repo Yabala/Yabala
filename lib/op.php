@@ -121,17 +121,20 @@ class OP {
 			//se define la leyenda según la licencia
 			if ($cc=="CR"){
 				$code = $code."T&eacute;rminos de uso: Obra con todos los derechos reservados. ";
-				$codeQR = $codeQR."Términos de uso: Obra con todos los derechos reservados. ";
+				$codeQR = $codeQR."Términos de uso: Obra con todos los derechos reservados ";
 			}elseif($cc=="PD"){
 				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; bajo <a href='".$yabalaUrl."pd.htm' target='_blank'>Dominio P&uacute;blico</a>. ";
 				$codeQR = $codeQR."Términos de uso: Esta obra está bajo Dominio Público. ";
 			}elseif($cc=="CC0"){
-				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='".$yabalaUrl."cc0.htm' target='_blank'>Cretive Commons $cc 1.0 Universal</a>. ";
-				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo Cretive Commons $cc 1.0 Universal. ";
+				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='".$yabalaUrl."cc0.htm' target='_blank'>Cretive Commons $cc 1.0 Universal</a> ";
+				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo Cretive Commons $cc 1.0 Universal ";
 			}else{
-				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='$yabalaUrl".strtolower($cc).".htm' target='_blank'>Cretive Commons $cc Internacional licencia 4.0</a>. ";			
-				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo una licencia Cretive Commons $cc Internacional 4.0. ";			
+				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='$yabalaUrl".strtolower($cc).".htm' target='_blank'>Cretive Commons $cc Internacional licencia 4.0</a> ";			
+				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo una licencia Cretive Commons $cc Internacional 4.0 ";			
 			}
+			//Agregar diclaimer de exepciones
+			$code = $code."excepto cuando se indique lo contrario. ";
+			$codeQR = $codeQR."excepto cuando se indique lo contrario. ";
 			if ($author!=""){
 				$code = $code."Se atribuye a $author. ";
 				$codeQR = $codeQR."Se atribuye a $author. ";
