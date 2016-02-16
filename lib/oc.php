@@ -31,8 +31,8 @@ class OC {
 
 
 	//Constructor de la clase
-	function __construct($title, $format, $keywords, $author, $url, $cc, $modify, $exception) {
-		$this->data = new DATA($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
+	function __construct($title, $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion) {
+		$this->data = new DATA($title, $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion);
 	}
 
 	//RECIBE:	Nada
@@ -67,7 +67,7 @@ class OC {
 		//transforma Exception a STRING
 		if($this->data->getException()) $exception="TRUE";
 		else $exception="FALSE";
-		return array ($this->data->getTitle(), $this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense(), $modify, $exception); 
+		return array ($this->data->getTitle(), $this->data->getFormat(), $this->data->getKeywords(), $this->data->getAuthor(), $this->data->getUrl(), (string) $this->data->getLicense(), $modify, $exception, (string) $this->data->getExcepcion()); 
 	}
 
 

@@ -22,6 +22,7 @@ include_once("op.php");
 include_once("db5.php");
 include_once("formats.php");
 include_once("elcc.php");
+include_once("excepcion.php");
 
 
 class yabala implements iyabala{
@@ -63,6 +64,18 @@ class yabala implements iyabala{
 		return ELCC::getDomain();
 	}
 
+
+
+	//RECIBE:	Nada
+	//RETORNA:	Array of String
+	//NOTA:		Devuelve un array con los valores del dominio de EXCEPCION
+	public function getExceptions(){
+		//Retorna el resultado
+		return EXCEPCION::getDomain();
+	}
+
+
+
 	//RECIBE:	Tag
 	//RETORNA:	Array de Tag
 	//NOTA:		Retorna todos los valores del ELCC que podrían ser licencias para la adaptación de un material con licencia $cc
@@ -72,14 +85,16 @@ class yabala implements iyabala{
 
 
 	
-	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean
+	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean, String
 	//RETORNA:	String
-	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify, $exception al conjunto de materiales op
+	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion al conjunto de materiales op
 	//		Si no puede agregar la obra retorna un string distinto de vacío
-	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception){
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion){
 
 		//Chequear condiciones
 		$msg = "";
+
+		//RESTRICCIONES
 		
 		//$title no tiene restricciones 
 		
@@ -102,11 +117,19 @@ class yabala implements iyabala{
 		//Si $cc=BY-ND|BY-NC-ND|CR es admitido solo si $exception es TRUE 
 		if (!($exception)&&(ELCC::exception($cc))) $msg = $msg."[La licencia $cc no admite integrar conjuntos de materiales si no es de forma excepcional] ";		
 		
-		//Si $cc=PD entonces debe exigirse el autor o el título o la url, 
+		//Si $cc=PD entonces debe exigirse el autor o el título o la url
+		
+		
+		//Si $exception==true entonces $excepcion debe ser una excepción 
+		if (($exception)&&(!EXCEPCION::is($excepcion))) $msg = $msg."[Si la obra es una exepción se debe elegir un tipo de excepción] ";		
+
+		//Si $exception==false entonces $excepcion==""
+		if ((!$exception)&&($excepcion!="")) $msg = $msg."[Si la obra no es una exepción, el tipo de excepción no puede tener un valor asociado diferente de vacío] ";		
+		
 		
 		//crear el oc
 		if ($msg=="") {//si cumple todas las condiciones crea el oc		
-			$this->op->add($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
+			$this->op->add($title, $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion);
 		}
 		
 		return $msg;
@@ -143,12 +166,14 @@ class yabala implements iyabala{
 	//RECIBE:	String, String, String, String, Array of elements
 	//RETORNA:	Array of String
 	//NOTA:		EN ESTA VERSIÓN $options no se usa
-	//		Retorna un array con cinco strings que contienen:
+	//		Retorna un array de strings que contienen:
 	//		[0] String vacío si se crearón los créditos, sino trae un mensaje 
 	//		[1] La URL de la página HTML con los créditos del conjunto de materiales op ($name es usado para identificar el archivo creado)
 	//		[2] La URL de la imagen QR con los créditos  del conjunto de materiales op ($name es usado para identificar el archivo creado)
 	//		[3] La URL de la imagen QR con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
 	//		[4] La URL de la imagen Creative Commons con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
+	//		[5] La URL ($collectionsUrl+name+png) de la imagen QR de la url de los créditos del remix 
+	//		[6] La URL al texto de la licencia, si no hay texto retorna null 
 	public function credits($name, $cc, $title, $author, $options){
 		
 		//si la licencia $cc exige que el autor esté definido y $author="" retorna error
@@ -157,7 +182,7 @@ class yabala implements iyabala{
 		//si la licencia $cc es PD esté definido y $author="" retorna error
 		if ($cc=="PD") return array ("[El autor no puede optar por una licencia $cc, si lo que desea es renunciar a todos sus derechos sobre la obra, elija una licencia CC0]", "", "", "", "");				
 		
-		return $this->op->credits($name, $cc, $title, $author, self::creditsPath, self::yabalaUrl, 1, 1, 1);
+		return $this->op->credits($name, $cc, $title, $author, self::licensesUrl, self::licensesPath, self::collectionsPath, self::collectionsUrl, self::exceptionUrl);
 	}
 
 	//RECIBE:	Nada
@@ -205,27 +230,27 @@ class yabala implements iyabala{
 	//		La URL de la imagen QR con los créditos  del conjunto de materiales de nombre $nombre 
 	//		La URL de la imagen QR con la licencia  del conjunto de materiales de nombre $nombre 
 	//		La URL de la imagen Creative Commons con la licencia  del conjunto de materiales de nombre $nombre 
-	public function resetCredits($name, $options){
-		//definir nombres de archvios de créditos
-		$nameHtml = $name.".html";
-		$nameQrfull = $name."_full.png";
-		$nameQrmin = $name."_min.png";
-		
-		//si el archivo ya existe lo borra
-		if (file_exists(self::creditsPath.$nameHtml)){
-			unlink(self::creditsPath.$nameHtml);
-		}
-
-		//si el archivo ya existe lo borra	
-		if (file_exists(self::creditsPath.$nameQrfull)){
-			unlink(self::creditsPath.$nameQrfull);
-		}
-
-		//si el archivo ya existe lo borra
-		if (file_exists(self::creditsPath.$nameQrmin)){
-			unlink(self::creditsPath.$nameQrmin);
-		}
-	}
+//	public function resetCredits($name, $options){
+//		//definir nombres de archvios de créditos
+//		$nameHtml = $name.".html";
+//		$nameQrfull = $name."_full.png";
+//		$nameQrmin = $name."_min.png";
+//		
+//		//si el archivo ya existe lo borra
+//		if (file_exists(self::collectionsPath.$nameHtml)){
+//			unlink(self::collectionsPath.$nameHtml);
+//		}
+//
+//		//si el archivo ya existe lo borra	
+//		if (file_exists(self::collectionsPath.$nameQrfull)){
+//			unlink(self::collectionsPath.$nameQrfull);
+//		}
+//
+//		//si el archivo ya existe lo borra
+//		if (file_exists(self::collectionsPath.$nameQrmin)){
+//			unlink(self::collectionsPath.$nameQrmin);
+//		}
+//	}
 
 
 

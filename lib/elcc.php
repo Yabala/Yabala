@@ -75,7 +75,7 @@ class ELCC{
 	public static function r($value){
 		if ($value=="PD") return array ("PD","CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
 		if ($value=="CC0") return array ("CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
-		if ($value=="BY") return array ("BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND");
+		if ($value=="BY") return array ("BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
 		if ($value=="BY-SA") return array ("BY-SA");
 		if ($value=="BY-NC") return array ("BY-NC", "BY-NC-SA","BY-NC-ND");
 		if ($value=="BY-ND") return array ();
@@ -92,7 +92,7 @@ class ELCC{
 	public static function a($value){
 		if ($value=="PD") return array ("PD","CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
 		if ($value=="CC0") return array ("CC0","BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
-		if ($value=="BY") return array ("BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND");
+		if ($value=="BY") return array ("BY","BY-SA","BY-NC","BY-ND","BY-NC-SA","BY-NC-ND","CR");
 		if ($value=="BY-SA") return array ("BY-SA");
 		if ($value=="BY-NC") return array ("BY-NC", "BY-NC-SA","BY-NC-ND");
 		if ($value=="BY-ND") return array ();
@@ -137,6 +137,25 @@ class ELCC{
 		if ($value=="BY-NC-ND") return TRUE;
 		if ($value=="CR") return TRUE;
 		return FALSE;
+	}
+
+	//RECIBE:	Tag
+	//RETORNA:	String
+	//NOTA:		Retorna si $value pertenece al dominio del ELCC la info de dicho elemento (por ejemplo la definición de la licencia) sino retorna null
+	//REFERENCIAS: La mayoría de los textos devueltos son tomados de "https://creativecommons.org/licenses/", los que están bajo una licencia BY que es compatible con la licencia en que es liberado este código (GPL 3)
+	public static function info($value){
+		//este método se debería implementar buscando en la constante de clase _DOMAIN_ pero
+		//no puede ser declaradas constantes en PHP que sean arrays
+		if ($value=="PD") return "Cualquier explotación de la obra es permitida.";
+		if ($value=="CC0") return "Esta licencia permite a otros distribuir, mezclar, ajustar y construir a partir de su obra, incluso con fines comerciales y sin necesidad que le sea reconocida la autoría de la creación original.";
+		if ($value=="BY") return "Esta licencia permite a otros distribuir, mezclar, ajustar y construir a partir de su obra, incluso con fines comerciales, siempre que le sea reconocida la autoría de la creación original.";
+		if ($value=="BY-NC") return "Esta licencia permite a otros entremezclar, ajustar y construir a partir de su obra con fines no comerciales, y aunque en sus nuevas creaciones deban reconocerle su autoría y no puedan ser utilizadas de manera comercial, no tienen que estar bajo una licencia con los mismos términos.";
+		if ($value=="BY-SA") return "Esta licencia permite a otros re-mezclar, modificar y desarrollar sobre tu obra incluso para propósitos comerciales, siempre que te atribuyan el crédito y licencien sus nuevas obras bajo idénticos términos.";
+		if ($value=="BY-NC-SA") return "Esta licencia permite a otros entremezclar, ajustar y construir a partir de su obra con fines no comerciales, siempre y cuando le reconozcan la autoría y sus nuevas creaciones estén bajo una licencia con los mismos términos.";
+		if ($value=="BY-ND") return "Esta licencia permite la redistribución, comercial y no comercial, siempre y cuando la obra no se modifique y se transmita en su totalidad, reconociendo su autoría.";
+		if ($value=="BY-NC-ND") return "Esta licencia sólo permite que otros puedan descargar las obras y compartirlas con otros, siempre que se reconozca su autoría, pero no se pueden cambiar de ninguna manera ni se pueden utilizar comercialmente.";
+		if ($value=="CR") return "Ninguna explotación de la obra es permitida.";
+		return  null;
 	}
 
 	//RECIBE:	Tag

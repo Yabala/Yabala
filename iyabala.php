@@ -27,9 +27,13 @@ interface iyabala{
 
 
 
-	const yabalaUrl = "http://localhost/yabala/yabala/www/";
+	const collectionsUrl = "http://localhost/yabala/yabala/www/collections/";
+	const collectionsPath = "../yabala/www/collections/";
+	const licensesUrl = "http://localhost/yabala/yabala/www/licenses/";
+	const licensesPath = "../yabala/www/licenses/";
+	const exceptionUrl = "http://localhost/yabala/yabala/www/exceptions/";
+	const exceptionPath = "../yabala/www/exception/";
 	const repositoryListUrl = "http://localhost/yabala/yabala/db/list.csv";
-	const creditsPath = "../yabala/www/";
 	const dbPath = "../yabala/db/db.csv";
 	
 
@@ -52,6 +56,11 @@ interface iyabala{
 	//RETORNA:	Array of String
 	//NOTA:		Devuelve un array con los valores del dominio del ELCC
 	public function getLicenses();
+
+	//RECIBE:	Nada
+	//RETORNA:	Array of String
+	//NOTA:		Devuelve un array con los valores del dominio de EXCEPCION
+	public function getExceptions();
 	
 	
 	//RECIBE:	Tag
@@ -61,9 +70,9 @@ interface iyabala{
 
 
 	
-	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean
+	//RECIBE:	String, String, String, String, Tag, Boolean, Boolean, String
 	//RETORNA:	String
-	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify, $exception al conjunto de materiales op
+	//NOTA:		Agrega el material con datos $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion al conjunto de materiales op
 	//		Si no puede agregar la obra retorna un string distinto de vacío que información del error
 	//
 	//RESTRICCIONES:
@@ -75,7 +84,7 @@ interface iyabala{
 	//$cc		debe pertenecer al ELCC
 	//$modify	es admitida como TRUE solo si $cc=pd|cc0|BY|BY-SA|BY-NC|BY-NC-SA
 	//Si $cc=BY-ND|BY-NC-ND|CR es admitido solo si $exception es TRUE 
-	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception);
+	public function add($title, $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion);
 
 	//RECIBE:	Integer
 	//RETORNA:	Nada
@@ -100,12 +109,14 @@ interface iyabala{
 	//RECIBE:	String, String, String, String, Array of elements
 	//RETORNA:	Array of String
 	//NOTA:		EN ESTA VERSIÓN $options no se usa
-	//		Retorna un array con cinco strings que contienen:
+	//		Retorna un array de strings que contienen:
 	//		[0] String vacío si se crearón los créditos, sino trae un mensaje 
 	//		[1] La URL de la página HTML con los créditos del conjunto de materiales op ($name es usado para identificar el archivo creado)
 	//		[2] La URL de la imagen QR con los créditos  del conjunto de materiales op ($name es usado para identificar el archivo creado)
 	//		[3] La URL de la imagen QR con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)
 	//		[4] La URL de la imagen Creative Commons con la licencia  del conjunto de materiales op  ($name es usado para identificar el archivo creado)	
+	//		[5] La URL ($collectionsUrl+name+png) de la imagen QR de la url de los créditos del remix 
+	//		[6] La URL al texto de la licencia, si no hay texto retorna null 
 	public function credits($name, $cc, $title, $author, $options);
 	
 	//RECIBE:	Nada
@@ -145,7 +156,7 @@ interface iyabala{
 	//		La URL de la imagen QR con los créditos  del conjunto de materiales de nombre $nombre 
 	//		La URL de la imagen QR con la licencia  del conjunto de materiales de nombre $nombre 
 	//		La URL de la imagen Creative Commons con la licencia  del conjunto de materiales de nombre $nombre 
-	public function resetCredits($name, $options);
+	//public function resetCredits($name, $options);
 
 
 

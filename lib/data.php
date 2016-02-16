@@ -20,6 +20,7 @@
 
 
 include_once("licencia.php");
+include_once("excepcion.php");
 
 
 class DATA{
@@ -35,11 +36,12 @@ class DATA{
 	var $license;
 	var $modify;
 	var $exception;
+	var $excepcion;
 
 
 
 	//Constructor de la clase
-	function __construct($title, $format, $keywords, $author, $url, $cc, $modify, $exception) {
+	function __construct($title, $format, $keywords, $author, $url, $cc, $modify, $exception, $excepcion) {
 		$this->title = $title;
 		$this->format = $format;
 		$this->keywords = $keywords;
@@ -48,6 +50,7 @@ class DATA{
 		$this->license = new LICENCIA ($cc);
 		$this->modify = (boolean) $modify;
 		$this->exception = (boolean) $exception;
+		$this->excepcion = new EXCEPCION ($excepcion);
 	}
 
 	//RECIBE:	Nada
@@ -104,6 +107,20 @@ class DATA{
 	//NOTA:		Retorna el valor del $exception del objeto
 	public function getException(){
 			return $this->exception;
+	}
+	
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna el valor del $excepcion del objeto
+	public function getExcepcion(){
+			return $this->excepcion->getExcepcion();
+	}
+	
+	//RECIBE:	String
+	//RETORNA:	String
+	//NOTA:		Retorna el valor de la URL de la $excepcion del objeto
+	public function getUrlExcepcion($excepcion){
+			return $this->excepcion->getUrl($excepcion);
 	}
 	
 	//RECIBE:	Nada

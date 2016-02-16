@@ -134,13 +134,13 @@ class OP {
 				$codeQR = $codeQR."Términos de uso: Obra con todos los derechos reservados ";
 			}elseif($cc=="PD"){
 				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; bajo <a href='".$licensesUrl."pd.htm' target='_blank'>Dominio P&uacute;blico</a>. ";
-				$codeQR = $codeQR."Términos de uso: Esta obra está bajo Dominio Público (".$licensesUrl."pd.htm'). ";
+				$codeQR = $codeQR."Términos de uso: Esta obra está bajo Dominio Público. ";
 			}elseif($cc=="CC0"){
 				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='".$licensesUrl."cc0.htm' target='_blank'>Cretive Commons $cc 1.0 Universal</a> ";
-				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo Cretive Commons $cc 1.0 Universal (".$licensesUrl."cc0.htm') ";
+				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo Cretive Commons $cc 1.0 Universal ";
 			}else{
 				$code = $code."T&eacute;rminos de uso: Esta obra est&aacute; licenciada bajo <a href='$licensesUrl".strtolower($cc).".htm' target='_blank'>Cretive Commons $cc Internacional licencia 4.0</a> ";			
-				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo una licencia Cretive Commons $cc Internacional 4.0 (".$licensesUrl.strtolower($cc).".htm) ";			
+				$codeQR = $codeQR."Términos de uso: Esta obra está licenciada bajo una licencia Cretive Commons $cc Internacional 4.0 ";			
 			}
 			//Agregar diclaimer de exepciones
 			$code = $code."excepto cuando se indique lo contrario. ";
@@ -168,7 +168,7 @@ class OP {
 						$codeQR = $codeQR."Título: $titlet\n";
 					}
 					$code = $code."Licencia: <a href='$licensesUrl".strtolower($cct).".htm' target='_blank'>$cct</a>\n";
-					$codeQR = $codeQR."Licencia: $cct (".$licensesUrl.strtolower($cct).".htm)\n";
+					$codeQR = $codeQR."Licencia: $cct\n";
 					if ($authort!=""){
 						$code = $code."Autor: $authort\n";
 						$codeQR = $codeQR."Autor: $authort\n";
@@ -183,7 +183,7 @@ class OP {
 					}
 					if($data->getException()){
 						$code = $code."Este material forma parte del conjunto como una exepci&oacute;n: <a href='".$exceptionUrl.$data->getUrlExcepcion($data->getExcepcion())."' target='_blank'>".$data->getExcepcion()."</a>.\n\n";
-						$codeQR = $codeQR."Este material forma parte del conjunto como una exepción: ".$data->getExcepcion()."(".$data->getUrlExcepcion($data->getExcepcion()).")\n\n";
+						$codeQR = $codeQR."Este material forma parte del conjunto como una exepción: ".$data->getExcepcion()."\n\n";
 					}else{
 						$code = $code."\n";
 						$codeQR = $codeQR."\n"; 
@@ -196,10 +196,10 @@ class OP {
 
 			//HTML
 			//Definir el nombre del archivo HTML
-			$nameHtml = $pathCollection."index.html";
+			$nameHtml = $pathCollection.$name.".html";
 
 			//Definir la url del archivo HTML
-			$urlHtml = $collectionsUrl.$name."/index.html";
+			$urlHtml = $collectionsUrl.$name."/".$name.".html";
 
 			//Crea el archivo, si ya existe lo sobreescribe
 			$fp = fopen($nameHtml, "w");
@@ -210,10 +210,10 @@ class OP {
 			
 			//QR full
 			//Definir el nombre del archivo QR Full
-			$nameQrfull = $pathCollection."full.png";
+			$nameQrfull = $pathCollection.$name."_full.png";
 
 			//Definir la url del archivo QR Full
-			$urlQrfull = $collectionsUrl.$name."/full.png";
+			$urlQrfull = $collectionsUrl.$name."/".$name."_full.png";
 
 			//si el archivo ya existe lo borra
 			if (file_exists($nameQrfull)){
@@ -227,10 +227,10 @@ class OP {
 
 			//QR min
 			//Definir el nombre del archivo QR Min
-			$nameQrmin = $pathCollection."min.png";
+			$nameQrmin = $pathCollection.$name."_min.png";
 
 			//Definir la url del archivo QR min
-			$urlQrmin = $collectionsUrl.$name."/min.png";
+			$urlQrmin = $collectionsUrl.$name."/".$name."_min.png";
 
 			//si el archivo ya existe lo borra
 			if (file_exists($nameQrmin)){
@@ -248,10 +248,10 @@ class OP {
 			
 			//CC tradicional
 			//Definir el nombre del archivo CC
-			$nameCC = $pathCollection."cc.png";
+			$nameCC = $pathCollection.$name."_cc.png";
 
 			//Definir la url del archivo CC
-			$urlCC = $collectionsUrl.$name."/cc.png";
+			$urlCC = $collectionsUrl.$name."/".$name."_cc.png";
 
 			//si el archivo ya existe lo borra
 			if (file_exists($nameCC)){
@@ -264,10 +264,10 @@ class OP {
 
 			//QR url creditos
 			//Definir el nombre del archivo QR url
-			$nameQrurl = $pathCollection."url.png";
+			$nameQrurl = $pathCollection.$name."_url.png";
 
 			//Definir la url del archivo QR min
-			$urlQrurl = $collectionsUrl.$name."/url.png";
+			$urlQrurl = $collectionsUrl.$name."/".$name."_url.png";
 
 			//si el archivo ya existe lo borra
 			if (file_exists($nameQrurl)){
@@ -277,26 +277,8 @@ class OP {
 			//crea el nuevo archivo según la licencia
 			QRcode::png($urlHtml, $nameQrurl);
 
-
-
-			//CC link al texto de la licencia
-			//Definir el nombre del archivo link
-			$nameLink = $pathCollection."link.html";
-
-			//Definir la url del archivo CC
-			$urlLink = $collectionsUrl.$name."/link.html";
-
-			//si el archivo ya existe lo borra
-			if (file_exists($nameLink)){
-				unlink($nameLink);
-			}
-			//crea el nuevo archivo
-			copy($licensesPath.strtolower($cc).".htm", $nameLink);
 			
-
-
-			
-			return array ("", $urlHtml, $urlQrfull, $urlQrmin, $urlCC, $urlQrurl, $urlLink);
+			return array ("", $urlHtml, $urlQrfull, $urlQrmin, $urlCC, $urlQrurl, $licensesUrl.strtolower($cc).".htm");
 	}
 	
 
