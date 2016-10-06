@@ -29,12 +29,65 @@ class OP {
 
 	//Colección de objetos contenedores OC
 	var $ocs;
-
+	var $title;
+	var $author;
+	var $cc;
 
 
 	//Constructor de la clase
 	function __construct() {
 		$this->ocs = new Collection(array());
+		$this->title= "";
+		$this->author = "";
+		$this->cc = "CC0";
+	}
+	
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Define en el OC el $title 
+	public function setTitle($title){
+
+		$this->title= $title;
+	}
+	
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Define en el OC el $author 
+	public function setAuthor($author){
+
+		$this->author = $author;
+	}
+
+	//RECIBE:	Tag
+	//RETORNA:	Nada
+	//NOTA:		Define en el OC el $cc 
+	public function setCc($cc){
+
+		$this->cc = $cc;
+	}
+
+	//RECIBE:	Nada
+	//RETORNA:	String 
+	//NOTA:		Retorna el $title del OC 
+	public function getTitle(){
+
+		return ($this->title);
+	}
+	
+	//RECIBE:	Nada
+	//RETORNA:	String 
+	//NOTA:		Retorna el $author del OC 
+	public function getAuthor(){
+
+		return ($this->author);
+	}	
+
+	//RECIBE:	Nada
+	//RETORNA:	String 
+	//NOTA:		Retorna el $cc del OC 
+	public function getCc(){
+
+		return ($this->cc);
 	}
 
 

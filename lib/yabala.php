@@ -192,6 +192,48 @@ class yabala implements iyabala{
 		return $this->op->printOP();
 	}
 
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna un string con el título del conjunto de materiales 
+	public function getTitle(){
+		return $this->op->title;
+	}
+
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna un string con el autor(s) del conjunto de materiales 
+	public function getAuthor(){
+		return $this->op->author;
+	}
+	
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna un string con la licencia del conjunto de materiales 
+	public function getCc(){
+		return $this->op->cc;
+	}
+
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Recibe un string y lo setea como el título del conjunto de materiales 
+	public function setTitle($title){
+		$this->op->setTitle($title);
+	}
+
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Recibe un string y lo setea como el autor(s) del conjunto de materiales 
+	public function setAuthor($author){
+		$this->op->setAuthor($author);
+	}
+
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Recibe un string y lo setea como la licencia del conjunto de materiales 
+	public function setCc($cc){
+		$this->op->setCc($cc);
+	}
+
 
 
 	//RECIBE:	Nada

@@ -124,6 +124,36 @@ interface iyabala{
 	//NOTA:		Retorna un array con los componentes de cada material del conjunto de materiales op como un array de strings 
 	public function getWorks();
 
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna un string con el título del conjunto de materiales 
+	public function getTitle();
+
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna un string con el autor(s) del conjunto de materiales 
+	public function getAuthor();
+
+	//RECIBE:	Nada
+	//RETORNA:	String
+	//NOTA:		Retorna un string con la licencia del conjunto de materiales 
+	public function getCc();
+
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Recibe un string y lo setea como el título del conjunto de materiales 
+	public function setTitle($title);
+
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Recibe un string y lo setea como el autor(s) del conjunto de materiales 
+	public function setAuthor($author);
+
+	//RECIBE:	String
+	//RETORNA:	Nada
+	//NOTA:		Recibe un string y lo setea como la licencia del conjunto de materiales 
+	public function setCc($cc);
+
 
 
 	//RECIBE:	Nada
