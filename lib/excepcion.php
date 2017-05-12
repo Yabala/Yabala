@@ -47,7 +47,7 @@ class EXCEPCION{
 	public function getDomain(){
 		//_DOMAIN_ debería declararse como una constante pero PHP no admite constantes que sean arreglos
 		//este método debería retornar: self::_DOMAIN_
-		return array ("Ítem de una colección","Obra propia","Autorización manifiesta","Derecho a cita","Otro");
+		return array ("Ítem de una colección","Obra propia","Autorización manifiesta","Derecho a cita","Licencia estándar de Youtube","Otro");
 	}
 
 	//RECIBE:	String
@@ -58,6 +58,7 @@ class EXCEPCION{
 		if ($excepcion=="Obra propia") return "ownerWork.html";
 		if ($excepcion=="Autorización manifiesta") return "authorizationStates.html";
 		if ($excepcion=="Derecho a cita") return "rightQuote.html";
+		if ($excepcion=="Licencia estándar de Youtube") return "standarYoutube.html";
 		if ($excepcion=="Otro") return "other.html";
 		return NULL;
 	}
